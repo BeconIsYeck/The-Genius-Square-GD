@@ -1,0 +1,491 @@
+[gd_scene load_steps=36 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://Textures/grid.png" type="Texture" id=3]
+[ext_resource path="res://Audio/rotate.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Audio/drop.mp3" type="AudioStream" id=5]
+[ext_resource path="res://Audio/reset.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Audio/dice-roll.mp3" type="AudioStream" id=7]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 0.5, 0.5, 0.5 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=20]
+albedo_color = Color( 0, 0.392157, 0, 1 )
+
+[sub_resource type="BoxShape" id=32]
+extents = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_color = Color( 0, 0, 1, 1 )
+
+[sub_resource type="BoxShape" id=33]
+extents = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="SpatialMaterial" id=22]
+albedo_color = Color( 0.384314, 0.262745, 0.176471, 1 )
+
+[sub_resource type="BoxShape" id=34]
+extents = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="SpatialMaterial" id=23]
+albedo_color = Color( 1, 0.333333, 0, 1 )
+
+[sub_resource type="BoxShape" id=35]
+extents = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="SpatialMaterial" id=24]
+albedo_color = Color( 0.294118, 0.294118, 0.294118, 1 )
+
+[sub_resource type="BoxShape" id=36]
+extents = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="SpatialMaterial" id=25]
+albedo_color = Color( 1, 1, 0, 1 )
+
+[sub_resource type="BoxShape" id=37]
+extents = Vector3( 1, 0.5, 0.75 )
+
+[sub_resource type="BoxShape" id=38]
+extents = Vector3( 1, 0.5, 0.25 )
+
+[sub_resource type="SpatialMaterial" id=27]
+albedo_color = Color( 0.294118, 0.0784314, 0.392157, 1 )
+
+[sub_resource type="BoxShape" id=39]
+extents = Vector3( 1, 0.5, 0.5 )
+
+[sub_resource type="BoxShape" id=40]
+extents = Vector3( 1, 0.5, 0.25 )
+
+[sub_resource type="SpatialMaterial" id=28]
+albedo_color = Color( 0, 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=41]
+extents = Vector3( 1, 0.5, 0.75 )
+
+[sub_resource type="BoxShape" id=42]
+extents = Vector3( 1, 0.5, 0.25 )
+
+[sub_resource type="SpatialMaterial" id=29]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="BoxShape" id=30]
+extents = Vector3( 1, 0.5, 0.5 )
+
+[sub_resource type="BoxShape" id=31]
+extents = Vector3( 1, 0.5, 0.5 )
+
+[sub_resource type="CylinderShape" id=43]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="SpatialMaterial" id=44]
+albedo_color = Color( 0.760784, 0.67451, 0.368627, 1 )
+
+[sub_resource type="ViewportTexture" id=47]
+viewport_path = NodePath("Boards/NumCoords/Viewport")
+
+[sub_resource type="ViewportTexture" id=46]
+viewport_path = NodePath("Boards/CharCoords/Viewport")
+
+[sub_resource type="ViewportTexture" id=48]
+viewport_path = NodePath("Boards/Dice/Viewport")
+
+[node name="Main" type="Spatial"]
+
+[node name="Board" type="CSGCombiner" parent="."]
+
+[node name="MainBoard" type="CSGBox" parent="Board"]
+width = 40.0
+height = 1.0
+depth = 40.0
+material = SubResource( 1 )
+
+[node name="Rim" type="CSGBox" parent="Board"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0 )
+width = 40.0
+height = 0.5
+depth = 40.0
+material = SubResource( 1 )
+
+[node name="SubRim" type="CSGBox" parent="Board/Rim"]
+operation = 2
+width = 6.0
+height = 1.0
+depth = 6.0
+material = SubResource( 1 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.19, 0 )
+script = ExtResource( 2 )
+
+[node name="Light" type="SpotLight" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+spot_range = 9.259
+
+[node name="Shapes" type="Spatial" parent="."]
+
+[node name="SQ" type="KinematicBody" parent="Shapes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -2 )
+
+[node name="SQBox" type="CSGBox" parent="Shapes/SQ"]
+height = 1.0
+material = SubResource( 20 )
+
+[node name="SQCollider" type="CollisionShape" parent="Shapes/SQ"]
+shape = SubResource( 32 )
+
+[node name="D" type="KinematicBody" parent="Shapes"]
+transform = Transform( 0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, -2.5, 1, -0.5 )
+
+[node name="DBox" type="CSGBox" parent="Shapes/D"]
+height = 1.0
+material = SubResource( 21 )
+
+[node name="DCollider" type="CollisionShape" parent="Shapes/D"]
+shape = SubResource( 33 )
+
+[node name="I1" type="KinematicBody" parent="Shapes"]
+transform = Transform( -2.18557e-08, 0, 1, 0, 1, 0, -0.5, 0, -4.37114e-08, -2, 1, 2.5 )
+
+[node name="I1Box" type="CSGBox" parent="Shapes/I1"]
+height = 1.0
+material = SubResource( 22 )
+
+[node name="I1Collider" type="CollisionShape" parent="Shapes/I1"]
+shape = SubResource( 34 )
+
+[node name="I2" type="KinematicBody" parent="Shapes"]
+transform = Transform( -2.18557e-08, 0, 1.5, 0, 1, 0, -0.5, 0, -6.55671e-08, 0.5, 1, 2.5 )
+
+[node name="I2Box" type="CSGBox" parent="Shapes/I2"]
+height = 1.0
+material = SubResource( 23 )
+
+[node name="I2Collider" type="CollisionShape" parent="Shapes/I2"]
+shape = SubResource( 35 )
+
+[node name="I3" type="KinematicBody" parent="Shapes"]
+transform = Transform( -2.18557e-08, 0, 2, 0, 1, 0, -0.5, 0, -8.74228e-08, -1, 1, 1.5 )
+
+[node name="I3Box" type="CSGBox" parent="Shapes/I3"]
+height = 1.0
+material = SubResource( 24 )
+
+[node name="I3Collider" type="CollisionShape" parent="Shapes/I3"]
+shape = SubResource( 36 )
+
+[node name="T" type="KinematicBody" parent="Shapes"]
+transform = Transform( -2.18557e-08, 0, 2, 0, 1, 0, -0.5, 0, -8.74228e-08, -1.5, 1, 0.5 )
+
+[node name="T1" type="CSGBox" parent="Shapes/T"]
+height = 1.0
+depth = 1.5
+material = SubResource( 25 )
+
+[node name="T2" type="CSGBox" parent="Shapes/T"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+height = 1.0
+depth = 0.5
+material = SubResource( 25 )
+
+[node name="T1Collider" type="CollisionShape" parent="Shapes/T"]
+shape = SubResource( 37 )
+
+[node name="T2Collider" type="CollisionShape" parent="Shapes/T"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+shape = SubResource( 38 )
+
+[node name="HL" type="KinematicBody" parent="Shapes"]
+transform = Transform( 0.5, 0, 2.13163e-14, 0, 1, 0, -5.32907e-15, 0, 2, -2.5, 1, -1.5 )
+
+[node name="HL1" type="CSGBox" parent="Shapes/HL"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25 )
+height = 1.0
+depth = 1.0
+material = SubResource( 27 )
+
+[node name="HL2" type="CSGBox" parent="Shapes/HL"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.19209e-07 )
+height = 1.0
+depth = 0.5
+material = SubResource( 27 )
+
+[node name="HL1Collider" type="CollisionShape" parent="Shapes/HL"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25 )
+shape = SubResource( 39 )
+
+[node name="HL2Collider" type="CollisionShape" parent="Shapes/HL"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+shape = SubResource( 40 )
+
+[node name="L" type="KinematicBody" parent="Shapes"]
+transform = Transform( -0.5, 0, -3.01992e-07, 0, 1, 0, 7.54979e-08, 0, -2, -0.5, 1, -2.5 )
+
+[node name="L1" type="CSGBox" parent="Shapes/L"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+height = 1.0
+depth = 1.5
+material = SubResource( 28 )
+
+[node name="L2" type="CSGBox" parent="Shapes/L"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.19209e-07 )
+height = 1.0
+depth = 0.5
+material = SubResource( 28 )
+
+[node name="L1Collider" type="CollisionShape" parent="Shapes/L"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
+shape = SubResource( 41 )
+
+[node name="L2Collider" type="CollisionShape" parent="Shapes/L"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+shape = SubResource( 42 )
+
+[node name="S" type="KinematicBody" parent="Shapes"]
+transform = Transform( 0.5, 0, 2.13163e-14, 0, 1, 0, -5.32907e-15, 0, 2, 1, 1, 0.499999 )
+
+[node name="S1" type="CSGBox" parent="Shapes/S"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -0.25 )
+height = 1.0
+depth = 1.0
+material = SubResource( 29 )
+
+[node name="S2" type="CSGBox" parent="Shapes/S"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0.25 )
+height = 1.0
+depth = 1.0
+material = SubResource( 29 )
+
+[node name="S1Collider" type="CollisionShape" parent="Shapes/S"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -0.25 )
+shape = SubResource( 30 )
+
+[node name="S2Collider" type="CollisionShape" parent="Shapes/S"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0.25 )
+shape = SubResource( 31 )
+
+[node name="Pegs" type="Spatial" parent="."]
+
+[node name="P1" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -2.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P1"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P1"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="P2" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -1.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P2"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P2"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="P3" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1, -0.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P3"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P3"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="P4" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -0.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P4"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P4"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="P5" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, 0.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P5"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P5"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="P6" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, 1.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P6"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P6"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="P7" type="KinematicBody" parent="Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, 2.5 )
+
+[node name="PCollider" type="CollisionShape" parent="Pegs/P7"]
+shape = SubResource( 43 )
+
+[node name="PMesh" type="CSGCylinder" parent="Pegs/P7"]
+radius = 0.5
+sides = 12
+smooth_faces = false
+material = SubResource( 44 )
+
+[node name="Boards" type="Spatial" parent="."]
+
+[node name="NumCoords" type="Spatial" parent="Boards"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0 )
+
+[node name="Viewport" type="Viewport" parent="Boards/NumCoords"]
+size = Vector2( 100, 25 )
+transparent_bg = true
+
+[node name="Label" type="Label" parent="Boards/NumCoords/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "1  2   3   4  5  6"
+align = 1
+valign = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="Boards/NumCoords"]
+transform = Transform( 5.4, 0, 0, 0, -1.31134e-07, 1, 0, -4.5, -6.55671e-08, 0, -2, -3.25 )
+flip_v = true
+texture = SubResource( 47 )
+
+[node name="CharCoords" type="Spatial" parent="Boards"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.25, 0 )
+
+[node name="Viewport" type="Viewport" parent="Boards/CharCoords"]
+size = Vector2( 100, 100 )
+transparent_bg = true
+
+[node name="Label" type="Label" parent="Boards/CharCoords/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "A
+B
+C
+D
+E
+F"
+
+[node name="Sprite3D" type="Sprite3D" parent="Boards/CharCoords"]
+transform = Transform( 4, 0, 0, 0, -2.62268e-07, 1, 0, -6, -4.37114e-08, -1.5, -1.75, 0 )
+flip_v = true
+texture = SubResource( 46 )
+
+[node name="Dice" type="Spatial" parent="Boards"]
+
+[node name="Viewport" type="Viewport" parent="Boards/Dice"]
+size = Vector2( 300, 50 )
+transparent_bg = true
+
+[node name="Label" type="Label" parent="Boards/Dice/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Roll Dice (D)"
+align = 1
+valign = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="Boards/Dice"]
+transform = Transform( 3.5, 0, 0, 0, -1.63918e-07, 1, 0, -3.75, -4.37114e-08, 2.25, 1.5, 4 )
+flip_v = true
+texture = SubResource( 48 )
+
+[node name="ResetPositions" type="Spatial" parent="."]
+
+[node name="Shapes" type="Spatial" parent="ResetPositions"]
+
+[node name="SQ" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -3 )
+
+[node name="D" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1, -1.5 )
+
+[node name="I1" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 1, 0 )
+
+[node name="I2" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1, 1.5 )
+
+[node name="I3" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 1, 3.5 )
+
+[node name="T" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.5, 1, -3.5 )
+
+[node name="HL" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( -2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, 5.5, 1, -1.5 )
+
+[node name="L" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.5, 1, -0.5 )
+
+[node name="S" type="Position3D" parent="ResetPositions/Shapes"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.5, 1, 2 )
+
+[node name="Pegs" type="Spatial" parent="ResetPositions"]
+
+[node name="P1" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, 2.5 )
+
+[node name="P2" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, 1.5 )
+
+[node name="P3" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, 0.5 )
+
+[node name="P4" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, -0.5 )
+
+[node name="P5" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, -1.5 )
+
+[node name="P6" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, -2.5 )
+
+[node name="P7" type="Position3D" parent="ResetPositions/Pegs"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, -3.5 )
+
+[node name="Audio" type="Spatial" parent="."]
+
+[node name="Drop" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 5 )
+volume_db = -7.5
+
+[node name="Rotate" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 4 )
+volume_db = -5.0
+pitch_scale = 1.5
+
+[node name="Reset" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 6 )
+volume_db = -2.5
+
+[node name="DiceRoll" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 7 )
+volume_db = 2.0

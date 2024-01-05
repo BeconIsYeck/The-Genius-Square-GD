@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/rotate.mp3-0e580cf25d1113613214f964d5db39b2.mp3str"
+
+[deps]
+
+source_file="res://Audio/rotate.mp3"
+dest_files=[ "res://.import/rotate.mp3-0e580cf25d1113613214f964d5db39b2.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
